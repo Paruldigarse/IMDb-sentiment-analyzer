@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMDB Sentiment Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Header ────────────────────────────────────────────────────── -->
+    <header>
+      <div class="brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>IMDB Sentiment Analyzer</span>
+      </div>
+      <nav>
+        <a href="/report" target="_blank">📊 Report Card</a>
+        <a href="/metrics" target="_blank">📈 Metrics API</a>
+      </nav>
+    </header>
+
+    <!-- ── Hero ──────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <h1>Movie Review Sentiment Analysis</h1>
+      <p class="hero-sub">
+        Powered by Logistic Regression + TF-IDF · Trained on 50,000 IMDB reviews
+      </p>
+    </section>
+
+    <!-- ── Input Card ────────────────────────────────────────────────── -->
+    <div class="card input-card">
+      <label class="input-label" for="review-input">
+        Paste or type a movie review below
+      </label>
+      <textarea
+        id="review-input"
+        class="review-textarea"
+        placeholder="e.g. An absolute masterpiece. The performances were stunning and the direction was flawless…""
+        rows="6"
+        spellcheck="true"
+      ></textarea>
+      <div class="input-footer">
+        <span id="char-count" class="char-count">0 characters</span>
+        <div class="btn-group">
+          <button id="clear-btn"   class="btn btn-secondary">Clear</button>
+          <button id="analyze-btn" class="btn btn-primary">Analyze Sentiment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Result Card ───────────────────────────────────────────────── -->
+    <div class="card result-card hidden" id="result-card">
+      <div class="result-header">
+        <span id="result-icon" class="result-icon" aria-hidden="true"></span>
+        <span id="result-label" class="result-label"></span>
+      </div>
+      <div class="confidence-bar-wrap">
+        <div class="confidence-labels">
+          <span>Negative</span>
+          <span>Positive</span>
+        </div>
+        <div class="confidence-bar-track">
+          <div id="bar-neg" class="bar-neg"></div>
+          <div id="bar-pos" class="bar-pos"></div>
+        </div>
+        <div class="confidence-labels">
+          <span id="pct-neg" class="pct-neg"></span>
+          <span id="pct-pos" class="pct-pos"></span>
+        </div>
+      </div>
+      <p id="confidence-text" class="confidence-text"></p>
+    </div>
+
+    <!-- ── Error Banner ──────────────────────────────────────────────── -->
+    <div class="error-banner hidden" id="error-banner">
+      <span id="error-text"></span>
+    </div>
+
+    <!-- ── Examples ──────────────────────────────────────────────────── -->
+    <div class="card examples-card">
+      <h2 class="section-title">Try an example</h2>
+      <div class="examples-grid">
+        <button class="example-chip positive-chip"
+          data-text="An absolute masterpiece. The storytelling was breathtaking, performances were stunning, and every scene felt meticulously crafted. One of the best films I have ever seen.">
+          ⭐ Positive example
+        </button>
+        <button class="example-chip negative-chip"
+          data-text="A complete waste of time. The plot was incoherent, the acting was wooden, and the dialogue felt painfully forced. I walked out halfway through.">
+          👎 Negative example
+        </button>
+        <button class="example-chip positive-chip"
+          data-text="Surprisingly heartfelt and moving. The director managed to balance humor with genuine emotion in a way that felt completely authentic.">
+          💚 Subtle positive
+        </button>
+        <button class="example-chip negative-chip"
+          data-text="I had high hopes but was left deeply disappointed. The pacing was dreadful, and the twist ending made absolutely no sense.">
+          😞 Subtle negative
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Model Info ────────────────────────────────────────────────── -->
+    <div class="card info-card">
+      <h2 class="section-title">How it works</h2>
+      <ol class="steps">
+        <li><strong>Text Cleaning</strong> – lowercase, HTML strip, punctuation removal, stop-word filtering</li>
+        <li><strong>TF-IDF Vectorization</strong> – unigrams + bigrams, 50,000 features, sublinear TF scaling</li>
+        <li><strong>Logistic Regression</strong> – L2 regularisation (C=1.0), lbfgs solver</li>
+        <li><strong>Output</strong> – predicted class (positive / negative) + probability scores</li>
+      </ol>
+    </div>
+
+    <footer>Made with IBM Bob</footer>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>
